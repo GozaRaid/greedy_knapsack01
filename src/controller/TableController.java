@@ -133,6 +133,9 @@ public class TableController {
                     currentItem.append(details.get(j)[0]);
                 }
             }
+
+            System.out.println("Subset :" + (i+1) + "barang yang di pilih " + currentItem + " - " + totalProfit + " - " + totalWeight);
+
             if (totalWeight <= k && totalProfit > maxProfit) {
                 maxProfit = totalProfit;
                 selectedItems = currentItem.toString();
@@ -153,6 +156,9 @@ public class TableController {
         int n = details.size();
         int [][] dp = new int[n+1][k+1];
 
+        System.out.println("inisiasi table:");
+        printDpTable(dp,n,k);
+
         for (int i = 1; i <= n; i++){
             for (int w = 1; w <= k; w++) {
                 if (details.get(i - 1)[1] <= w) {
@@ -161,6 +167,8 @@ public class TableController {
                     dp[i][w] = dp[i - 1][w];
                 }
             }
+            System.out.println("table iterasi: " + i);
+            printDpTable(dp,n,k);
         }
 
         StringBuilder selectedItems = new StringBuilder();
@@ -183,5 +191,20 @@ public class TableController {
         JOptionPane.showMessageDialog(view, "Execution time: " + durationString + " second ");
     }
 
+    private void printDpTable(int[][] dp, int n, int k) {
+        System.out.print("    ");
+        for (int w = 0; w <= k; w++) {
+            System.out.printf("%4d ", w);
+        }
+        System.out.println();
+
+        for (int i = 0; i <= n; i++) {
+            System.out.print(String.format("%2d: ", i));
+            for (int w = 0; w <= k; w++) {
+                System.out.printf("%4d ", dp[i][w]);
+            }
+            System.out.println();
+        }
+    }
 }
 
